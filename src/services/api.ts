@@ -12,7 +12,9 @@ const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json'
-  }
+  },
+  // Add withCredentials to handle CORS properly
+  withCredentials: false
 });
 
 // Request interceptor to add auth token
@@ -34,6 +36,13 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     console.error('API Error:', error);
+    
+    // Check if it's a network error (like CORS issue)
+    if (error.message === 'Network Error') {
+      toast.error('Network error: Unable to connect to the server. Please try again later.');
+      return Promise.reject(error);
+    }
+    
     const message = error.response?.data?.message || 'An error occurred';
     toast.error(message);
     
