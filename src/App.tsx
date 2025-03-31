@@ -19,7 +19,7 @@ import Templates from "@/pages/Templates";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/NotFound";
 
-// Auth Guard component
+// Auth Guard component - this should be inside AuthProvider
 const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem('token');
   
