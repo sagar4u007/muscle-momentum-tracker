@@ -1,12 +1,10 @@
-
 import axios from 'axios';
 import { toast } from 'sonner';
 
-// Use the correct base URL - if you're running the API locally on port 8080, this should be:
-// For local development:
-// const BASE_URL = 'http://localhost:8080/api';
-// For hosted environment:
-const BASE_URL = 'https://muscle-momentum-api.onrender.com/api';
+// Use the correct base URL - local development on port 8081
+const BASE_URL = 'http://localhost:8081/api';
+// Uncomment this for hosted environment if needed:
+// const BASE_URL = 'https://muscle-momentum-api.onrender.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
