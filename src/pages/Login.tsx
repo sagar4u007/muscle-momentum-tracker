@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dumbbell } from 'lucide-react';
+import { Dumbbell, ArrowLeft } from 'lucide-react';
 
 const Login = () => {
   const { login, isLoading } = useAuth();
@@ -38,6 +38,13 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-dark flex items-center justify-center p-4">
+      <div className="absolute top-4 left-4">
+        <Link to="/" className="text-muted-foreground hover:text-white flex items-center">
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back to Home
+        </Link>
+      </div>
+      
       <Card className="w-full max-w-md bg-dark-light border-dark-lighter">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">

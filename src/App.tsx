@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
@@ -29,7 +30,14 @@ const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -40,20 +48,56 @@ const App = () => (
         <AuthProvider>
           <Routes>
             {/* Public routes */}
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             
             {/* Protected routes */}
-            <Route path="/" element={<Navigate to="/dashboard" />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/exercises" element={<Exercises />} />
-            <Route path="/exercises/:id" element={<ExerciseDetail />} />
-            <Route path="/workouts" element={<Workouts />} />
-            <Route path="/workouts/:id" element={<WorkoutDetail />} />
-            <Route path="/workouts/new" element={<NewWorkout />} />
-            <Route path="/progress" element={<Progress />} />
-            <Route path="/templates" element={<Templates />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route path="/dashboard" element={
+              <AuthGuard>
+                <Dashboard />
+              </AuthGuard>
+            } />
+            <Route path="/exercises" element={
+              <AuthGuard>
+                <Exercises />
+              </AuthGuard>
+            } />
+            <Route path="/exercises/:id" element={
+              <AuthGuard>
+                <ExerciseDetail />
+              </AuthGuard>
+            } />
+            <Route path="/workouts" element={
+              <AuthGuard>
+                <Workouts />
+              </AuthGuard>
+            } />
+            <Route path="/workouts/:id" element={
+              <AuthGuard>
+                <WorkoutDetail />
+              </AuthGuard>
+            } />
+            <Route path="/workouts/new" element={
+              <AuthGuard>
+                <NewWorkout />
+              </AuthGuard>
+            } />
+            <Route path="/progress" element={
+              <AuthGuard>
+                <Progress />
+              </AuthGuard>
+            } />
+            <Route path="/templates" element={
+              <AuthGuard>
+                <Templates />
+              </AuthGuard>
+            } />
+            <Route path="/profile" element={
+              <AuthGuard>
+                <Profile />
+              </AuthGuard>
+            } />
             
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />

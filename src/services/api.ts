@@ -2,7 +2,11 @@
 import axios from 'axios';
 import { toast } from 'sonner';
 
-const BASE_URL = 'http://localhost:8080/api';
+// Use the correct base URL - if you're running the API locally on port 8080, this should be:
+// For local development:
+// const BASE_URL = 'http://localhost:8080/api';
+// For hosted environment:
+const BASE_URL = 'https://muscle-momentum-api.onrender.com/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -29,6 +33,7 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    console.error('API Error:', error);
     const message = error.response?.data?.message || 'An error occurred';
     toast.error(message);
     
